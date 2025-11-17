@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from "react";
-
-const Card = ({ title }) => {
-  const [hasLiked, setHasLiked] = useState(false);
-  useEffect(() => {
-    console.log(`${title} has been liked : ${hasLiked}`);
-  }, [hasLiked]);
-  return (
-    <div className="card">
-      <h1>{title}</h1>
-      <button
-        onClick={() => {
-          setHasLiked(!hasLiked);
-        }}
-      >
-        {hasLiked ? "❤️" : "🤍"}
-      </button>
-    </div>
-  );
-};
+import React, { useState } from "react";
+import Search from "./components/Search";
 
 const App = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
-    <div className="card-container">
-      <Card title="Ram" />
-      <Card title="Raja" />
-      <Card title="Ravi" />
-    </div>
+    <main>
+      <div className="pattern" />
+      <div className="wrapper">
+        <header>
+          <img src="./hero.png" alt="Hero Image" />
+          <h1>
+            Find <span className="text-gradient">Movies</span> You'll Love
+            Without the Hassle
+          </h1>
+        </header>
+        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <h1 className="text-4xl text-white">{searchTerm}</h1>
+      </div>
+    </main>
   );
 };
 
