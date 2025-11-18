@@ -1,16 +1,154 @@
-# React + Vite
+# 🎬 CineNova
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CineNova is a modern movie discovery web application built using **React**, **Appwrite**, and **TMDB API**, inspired by a tutorial from **JS Mastery**.  
+It allows users to search movies, view trending titles, and track search popularity using Appwrite.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### 🔍 Search Movies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Search instantly through TMDB’s movie database
+- Debounced search (prevents excessive API calls)
+- Each search is stored in Appwrite with a search count
 
-## Expanding the ESLint configuration
+### 📈 Trending Movies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Top 5 trending movies fetched from Appwrite
+- Sorted by most searched movies
+- Displays posters for top trending titles
+
+### 🎥 Movie List
+
+- Poster
+- Title
+- Rating
+- Language
+- Release Year
+- Fallback image if poster not available
+
+### ⚡ User Experience
+
+- Clean, simple UI
+- Fully responsive
+- Smooth loading states
+- Error handling (API failures, empty results)
+
+---
+
+## 🛠️ Tech Stack
+
+### **Frontend**
+
+- React
+- Vite
+- Tailwind CSS / Custom CSS
+- react-use (Debounce)
+
+### **Backend**
+
+- Appwrite (Database, Collections)
+
+### **External API**
+
+- TMDB (The Movie Database API)
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+│── App.jsx
+│── appwrite.js
+│── components/
+│     ├── Search.jsx
+│     ├── Spinner.jsx
+│     └── MovieCard.jsx
+│── assets/
+│     ├── hero.png
+│     ├── search.svg
+│     └── no-movie.png
+```
+
+---
+
+## 🔧 Environment Variables
+
+Create a **.env** file in the project root:
+
+```env
+VITE_TMDB_API_KEY=your_tmdb_api_key
+VITE_APPWRITE_ENDPOINT=your_appwrite_endpoint
+VITE_APPWRITE_PROJECT_ID=your_project_id
+VITE_APPWRITE_DATABASE_ID=your_database_id
+VITE_APPWRITE_COLLECTION_NAME=your_collection_name
+```
+
+---
+
+## 📝 How CineNova Works
+
+### 1️⃣ Fetching Movies
+
+- If user types something → Use TMDB **search/movie**
+- If search box is empty → Load popular movies from **discover/movie**
+
+### 2️⃣ Appwrite Search Tracking Logic
+
+Each time user searches:
+
+- Check if the search term already exists in Appwrite
+- If exists → increment count
+- If not → create new document with:
+  - searchTerm
+  - count = 1
+  - movie_id
+  - poster_url
+
+### 3️⃣ Trending Movies
+
+Trending movies are fetched from Appwrite using:
+
+- `Query.orderDesc("count")`
+- `Query.limit(5)`
+
+These are displayed at the top of the page with ranking numbers.
+
+---
+
+## ▶️ Getting Started
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run development server
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+---
+
+## 🗄️ Appwrite Collection Structure
+
+Your Appwrite Collection must contain the following fields:
+
+| Field Name | Type   | Description              |
+| ---------- | ------ | ------------------------ |
+| searchTerm | String | The user's search text   |
+| count      | Number | Number of times searched |
+| movie_id   | Number | TMDB movie ID            |
+| poster_url | String | Movie poster image       |
+
+---
