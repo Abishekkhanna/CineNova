@@ -152,3 +152,42 @@ Your Appwrite Collection must contain the following fields:
 | poster_url | String | Movie poster image       |
 
 ---
+
+## 🚀 Deploying to GitHub Pages
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+
+### Prerequisites
+
+1. Make sure GitHub Pages is enabled in your repository settings:
+   - Go to **Settings** → **Pages**
+   - Under **Source**, select **GitHub Actions**
+
+### Automatic Deployment
+
+The project will automatically deploy to GitHub Pages when you push to the `main` branch. The workflow:
+
+1. Builds the project using `npm run build`
+2. Uploads the `dist` folder as an artifact
+3. Deploys to GitHub Pages
+
+Your site will be available at: `https://[your-username].github.io/CineNova/`
+
+### Manual Deployment
+
+You can also manually trigger the deployment:
+
+1. Go to **Actions** tab in your GitHub repository
+2. Select **Deploy to GitHub Pages** workflow
+3. Click **Run workflow**
+
+### Local Testing
+
+To test the production build locally:
+
+```bash
+npm run build
+npm run preview
+```
+
+---
