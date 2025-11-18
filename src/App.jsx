@@ -3,6 +3,7 @@ import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import { useDebounce } from "react-use";
+import { updateSearchTerm } from "./appwrite";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -43,6 +44,7 @@ const App = () => {
       }
       console.log(data);
       setMovieList(data.results || []);
+      updateSearchTerm(searchTerm, data);
     } catch (error) {
       console.error(`Error Loading Movies : ${error}`);
       setErrorMessage("Error Loading Movies. Please try again later ");
