@@ -28,10 +28,22 @@ export const updateSearchTerm = async (searchTerm, movie) => {
         searchTerm,
         count: 1,
         movie_id: movie.id,
-        poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_url}`,
+        poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
       });
     }
   } catch (error) {
     console.error(`Error updating search term in appwrite ${error}`);
+  }
+};
+
+export const getTrendingMovies = async () => {
+  try {
+    const res = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+      Query.limit(5),
+      Query.orderDesc("count"),
+    ]);
+    return res.documents;
+  } catch (error) {
+    console.error(error);
   }
 };
